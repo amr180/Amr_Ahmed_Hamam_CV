@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" x-data="app()" class="scroll-smooth" data-theme="dark" data-palette="cyber">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Amr Ahmed Hamam · Entry-Level Full Stack .NET Developer. ASP.NET Core, Angular, Clean Architecture, MediatR, JWT, SQL Server and software testing.">
+<meta name="keywords" content="Amr Ahmed Hamam, Full Stack .NET Developer, ASP.NET Core, Angular, C#, EF Core, SQL Server, Clean Architecture, MediatR, JWT, Dependency Injection, Software Testing">
+<meta name="author" content="Amr Ahmed Hamam">
+<meta property="og:title" content="Amr Ahmed Hamam · Full Stack .NET Developer">
+<meta property="og:description" content="Entry-Level Full Stack .NET Developer · ASP.NET Core · Angular · Clean Architecture · MediatR · JWT">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#060b16">
+<title>Amr Ahmed Hamam · Full Stack .NET Developer</title>
+
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- ═══ THEME & PALETTE TOKENS ═══ -->
+<style>
+/* ------------------------------------------------------------------
+   Theme surfaces  (data-theme on <html>)
+------------------------------------------------------------------- */
+:root[data-theme="dark"]{
+  --accent:#22d3ee; --accent-2:#10b981; --grad-mid:#0ea5e9; --accent-ink:#060b16;
+  --sw1:#22d3ee; --sw2:#10b981;
+  --bg:#060b16; --bg-soft:#0a1220; --card:#0d1728; --card-2:#101c31;
+  --border:rgba(255,255,255,.08); --border-strong:rgba(255,255,255,.16);
+  --text:#ffffff; --text-2:#cbd5e1; --muted:#94a3b8;
+  --navbg:rgba(6,11,22,.9); --grid:rgba(148,163,184,.06); --pf:#101c31;
+}
+:root[data-theme="light"]{
+  --accent:#0ea5e9; --accent-2:#059669; --grad-mid:#0284c7; --accent-ink:#ffffff;
+  --sw1:#0ea5e9; --sw2:#059669;
+  --bg:#f8fafc; --bg-soft:#eef2f7; --card:#ffffff; --card-2:#f1f5f9;
+  --border:rgba(15,23,42,.09); --border-strong:rgba(15,23,42,.18);
+  --text:#0f172a; --text-2:#334155; --muted:#64748b;
+  --navbg:rgba(248,250,252,.92); --grid:rgba(15,23,42,.05); --pf:#e2e8f0;
+}
+
+/* ------------------------------------------------------------------
+   Palette bundles  (data-palette on <html>, override accent vars)
+------------------------------------------------------------------- */
+:root[data-palette="cyber"]{--accent:#22d3ee; --accent-2:#10b981; --grad-mid:#0ea5e9; --sw1:#22d3ee; --sw2:#10b981;}
+:root[data-palette="royal"]{--accent:#818cf8; --accent-2:#34d399; --grad-mid:#a78bfa; --sw1:#818cf8; --sw2:#34d399;}
+:root[data-palette="aurum"]{--accent:#fbbf24; --accent-2:#34d399; --grad-mid:#f97316; --sw1:#fbbf24; --sw2:#f97316;}
+:root[data-palette="ocean"]{--accent:#38bdf8; --accent-2:#2dd4bf; --grad-mid:#2563eb; --sw1:#38bdf8; --sw2:#2dd4bf;}
+:root[data-palette="flame"]{--accent:#fb7185; --accent-2:#fbbf24; --grad-mid:#f97316; --sw1:#fb7185; --sw2:#fbbf24;}
+
+/* derived accents */
+:root{
+  --accent-soft:color-mix(in srgb,var(--accent) 12%,transparent);
+  --accent-border:color-mix(in srgb,var(--accent) 30%,transparent);
+  --accent-2-soft:color-mix(in srgb,var(--accent-2) 12%,transparent);
+  --accent-2-border:color-mix(in srgb,var(--accent-2) 30%,transparent);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{font-family:'Inter',sans-serif}
+h1,h2,h3,h4,h5,h6{font-family:'Inter',sans-serif;letter-spacing:-.02em}
+[lang="ar"]{font-family:'Tajawal','Cairo',sans-serif}
+body{background:var(--bg);color:var(--text-2);transition:background-color .3s,color .3s}
+::selection{background:var(--accent);color:var(--accent-ink)}
+
+/* scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--accent),var(--accent-2));border-radius:99px}
+
+/* subtle grid backdrop for hero */
+.grid-bg{position:absolute;inset:0;pointer-events:none;
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+background-size:52px 52px;
+-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%);
+mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%)}
+
+/* gradient text */
+.grad-text{background:linear-gradient(90deg,var(--accent),var(--grad-mid) 45%,var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.d0{transition-delay:.04s}.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* nav underline */
+.nl{position:relative;color:var(--muted)}
+.nl::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .22s cubic-bezier(.4,0,.2,1)}
+.nl:hover::after,.nl.on::after{width:100%}
+.nl:hover{color:var(--text)}
+.nl.on{color:var(--accent);font-weight:500}
+
+/* shimmer button */
+.shimmer{position:relative;overflow:hidden}
+.shimmer::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s cubic-bezier(.4,0,.2,1)}
+.shimmer:hover::after{left:160%}
+
+/* card hover */
+.card-h{transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .18s,box-shadow .28s,background-color .3s}
+.card-h:hover{transform:translateY(-5px);border-color:var(--accent-border)!important;box-shadow:0 14px 40px -18px var(--accent-soft)}
+
+/* photo frame */
+.pf{overflow:hidden;background:var(--pf);transition:background-color .3s}
+.pf img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+
+/* tech badge */
+.tag{display:inline-flex;align-items:center;font-size:.75rem;font-weight:500;letter-spacing:.02em;
+background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-border);
+padding:.3rem .75rem;border-radius:999px;transition:all .18s;white-space:nowrap}
+.tag:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.tag.alt{background:var(--accent-2-soft);color:var(--accent-2);border-color:var(--accent-2-border)}
+.tag.alt:hover{border-color:var(--accent-2);background:color-mix(in srgb,var(--accent-2) 16%,transparent)}
+
+/* timeline */
+.tl{position:relative}
+.tl::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--accent),var(--grad-mid) 45%,var(--accent-2))}
+.tl-item{position:relative;padding-left:34px}
+.tl-dot{position:absolute;left:0;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tl-item.emerald .tl-dot{border-color:var(--accent-2);box-shadow:0 0 0 4px var(--accent-2-soft)}
+
+/* counters */
+.stat-num{font-variant-numeric:tabular-nums}
+
+/* floating social */
+.fbar{position:fixed;left:22px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;align-items:center;gap:14px}
+.fbar a{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:var(--card);border:1px solid var(--border);color:var(--muted);backdrop-filter:blur(8px);transition:all .25s}
+.fbar a:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 22px -8px var(--accent-border)}
+.fbar .fline{width:1px;height:64px;background:linear-gradient(180deg,var(--accent),var(--accent-2))}
+.fbar .ftag{writing-mode:vertical-rl;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+
+/* footer social buttons (matches site theme & palette) */
+.social-btn{width:42px;height:42px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:var(--muted);background:var(--bg);border:1px solid var(--border);transition:all .25s ease;text-decoration:none}
+.social-btn:hover{transform:translateY(-4px);color:#ffffff;border-color:var(--accent);box-shadow:0 8px 22px -8px var(--accent-border)}
+.social-btn.linkedin:hover{background-color:#0077b5;border-color:#0077b5;box-shadow:0 4px 12px rgba(0,119,181,.4)}
+.social-btn.youtube:hover{background-color:#ff0000;border-color:#ff0000;box-shadow:0 4px 12px rgba(255,0,0,.4)}
+.social-btn.credly:hover{background-color:#ff6b35;border-color:#ff6b35;box-shadow:0 4px 12px rgba(255,107,53,.4)}
+
+/* signature plaque */
+.sign-panel{background:#fff;border:1px solid #e4e4e7;border-radius:16px;padding:14px 22px 10px;display:inline-block;box-shadow:0 8px 24px -12px rgba(0,0,0,.35)}
+.sign-panel img{height:52px;width:auto;mix-blend-mode:multiply}
+
+/* palette swatches */
+.swatch{width:30px;height:30px;border-radius:50%;border:2px solid transparent;background:linear-gradient(135deg,var(--sw1),var(--sw2));cursor:pointer;transition:transform .2s,box-shadow .2s}
+.swatch:hover{transform:scale(1.12)}
+.swatch.active{border-color:var(--text);box-shadow:0 0 0 3px var(--accent-soft)}
+
+body,header,section,article,.tag,.btn-ico{transition:background-color .3s,border-color .3s,color .3s}
+
+[x-cloak]{display:none!important}
+</style>
+</head>
+
+<body class="antialiased">
+
+<!-- ═══ FLOATING SOCIAL BAR ═══ -->
+<aside class="fbar hidden lg:flex" aria-label="Social links">
+  <span class="ftag">Connect</span>
+  <a href="https://github.com/amr180" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.53-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.67 1.25 3.32.96.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.77.11 3.06.73.81 1.18 1.84 1.18 3.1 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.04.77 2.1v3.11c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+  </a>
+  <a href="mailto:amrr00360@gmail.com" aria-label="Email" title="Email">
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+  </a>
+  <span class="fline"></span>
+</aside>
+
+<!-- ═══ NAV ═══ -->
+<header class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+  :class="sc?'bg-[var(--navbg)] backdrop-blur-md border-b border-[var(--border)] shadow-lg shadow-black/20':''">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+    <a href="#hero" class="flex items-center gap-2.5 font-display font-bold text-lg tracking-tight">
+      <span class="relative inline-flex w-8 h-8 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--accent)] to-[var(--accent-2)] text-[var(--accent-ink)] font-extrabold text-sm">AH</span>
+      <span class="text-[var(--text)]">Amr <span class="text-[var(--accent)]">Ahmed</span></span>
+    </a>
+
+    <ul class="hidden lg:flex items-center gap-6 text-sm font-medium" role="list">
+      <li><a href="#about" class="nl" :class="s==='about'?'on':''">About</a></li>
+      <li><a href="#skills" class="nl" :class="s==='skills'?'on':''">Tech Stack</a></li>
+      <li><a href="#work" class="nl" :class="s==='work'?'on':''">Projects</a></li>
+      <li><a href="#training" class="nl" :class="s==='training'?'on':''">Training</a></li>
+      <li><a href="#experience" class="nl" :class="s==='experience'?'on':''">Experience</a></li>
+      <li><a href="#contact" class="nl" :class="s==='contact'?'on':''">Contact</a></li>
+    </ul>
+
+    <div class="flex items-center gap-2.5">
+      <div class="relative hidden sm:block" @click.outside="palOpen=false">
+        <button @click="palOpen=!palOpen" :aria-expanded="palOpen" aria-label="Color palette" title="Color palette" class="btn-ico w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-strong)] hover:bg-[var(--accent-soft)]">
+          <svg x-show="!palOpen" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828L13 15.656"/></svg>
+          <svg x-show="palOpen" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <div x-show="palOpen" x-cloak x-transition.opacity.duration.150ms class="absolute right-0 top-full mt-2 bg-[var(--card)] border border-[var(--border)] rounded-2xl shadow-2xl shadow-black/30 p-4 w-44 z-50">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-[var(--muted)] mb-3">Color palette</p>
+          <div class="grid grid-cols-5 gap-3 mb-3" role="list" aria-label="Color palettes">
+            <button role="listitem" @click="setPalette('cyber')" title="Cyber" :class="palette==='cyber'?'active':''" class="swatch" style="--sw1:#22d3ee;--sw2:#10b981" aria-label="Cyber palette"></button>
+            <button role="listitem" @click="setPalette('royal')" title="Royal" :class="palette==='royal'?'active':''" class="swatch" style="--sw1:#818cf8;--sw2:#34d399" aria-label="Royal palette"></button>
+            <button role="listitem" @click="setPalette('aurum')" title="Aurum" :class="palette==='aurum'?'active':''" class="swatch" style="--sw1:#fbbf24;--sw2:#f97316" aria-label="Aurum palette"></button>
+            <button role="listitem" @click="setPalette('ocean')" title="Ocean" :class="palette==='ocean'?'active':''" class="swatch" style="--sw1:#38bdf8;--sw2:#2dd4bf" aria-label="Ocean palette"></button>
+            <button role="listitem" @click="setPalette('flame')" title="Flame" :class="palette==='flame'?'active':''" class="swatch" style="--sw1:#fb7185;--sw2:#fbbf24" aria-label="Flame palette"></button>
+          </div>
+          <p class="text-[10px] text-[var(--muted)]" x-text="'Current: '+palette"></p>
+        </div>
+      </div>
+      <button @click="setTheme(theme==='dark'?'light':'dark')" class="btn-ico w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-strong)] hover:bg-[var(--accent-soft)]" :aria-label="theme==='dark'?'Switch to light mode':'Switch to dark mode'">
+        <svg x-show="theme==='dark'" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+        <svg x-show="theme==='light'" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <a href="#contact" class="hidden md:inline-flex items-center gap-2 shimmer bg-[var(--accent)] text-[var(--accent-ink)] text-sm font-bold px-5 py-2 rounded-full hover:opacity-90 transition-colors">Let's Connect →</a>
+      <button @click="mm=!mm" class="lg:hidden w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border-strong)] hover:bg-white/5" :aria-expanded="mm" aria-label="Toggle menu">
+        <svg x-show="!mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg x-show="mm" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div x-show="mm" x-cloak class="lg:hidden bg-[var(--bg)] border-t border-[var(--border)]">
+    <ul class="flex flex-col px-6 py-5 gap-4 text-sm font-medium" role="list">
+      <li><a href="#about" @click="mm=false" class="block text-[var(--text-2)] hover:text-[var(--accent)]">About</a></li>
+      <li><a href="#skills" @click="mm=false" class="block text-[var(--text-2)] hover:text-[var(--accent)]">Tech Stack</a></li>
+      <li><a href="#work" @click="mm=false" class="block text-[var(--text-2)] hover:text-[var(--accent)]">Projects</a></li>
+      <li><a href="#training" @click="mm=false" class="block text-[var(--text-2)] hover:text-[var(--accent)]">Training</a></li>
+      <li><a href="#experience" @click="mm=false" class="block text-[var(--text-2)] hover:text-[var(--accent)]">Experience</a></li>
+      <li><a href="#contact" @click="mm=false" class="block text-[var(--text-2)] hover:text-[var(--accent)]">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+<!-- ═══ HERO ═══ -->
+<section id="hero" class="relative min-h-screen flex items-center pt-16 overflow-hidden">
+  <div class="grid-bg"></div>
+  <div class="absolute top-1/4 right-0 w-[480px] h-[480px] bg-[var(--accent)]/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-1/4 left-0 w-72 h-72 bg-[var(--accent-2)]/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="relative z-10 max-w-6xl mx-auto px-6 py-24 w-full">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+      <div>
+        <div class="reveal inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-soft)] border border-[var(--accent-border)] px-4 py-1.5 rounded-full mb-6">
+          <span class="w-2 h-2 rounded-full bg-[var(--accent-2)] animate-pulse"></span>
+          Full Stack .NET Developer
+        </div>
+        <h1 class="reveal d1 font-display font-extrabold text-5xl md:text-6xl leading-[1.05] text-[var(--text)] mb-5">
+          Hi, I'm <span class="grad-text">Amr Ahmed</span>
+        </h1>
+        <p class="reveal d2 text-lg md:text-xl text-[var(--text-2)] font-light leading-relaxed max-w-xl mb-4">
+          <strong class="font-semibold text-[var(--text)]">Entry-Level Full Stack .NET Developer</strong><br>
+          ASP.NET Core · Angular · Clean Architecture · MediatR · JWT
+        </p>
+        <p class="reveal d3 text-[var(--muted)] leading-relaxed max-w-xl mb-8">
+          Computer Science graduate with hands-on experience building RESTful APIs and full-stack applications. Currently training at
+          <strong class="text-[var(--accent)]">Quad Insight</strong>, with a background in software testing that strengthens my focus on quality, debugging, and reliable delivery.
+        </p>
+        <div class="reveal d4 flex flex-wrap gap-4">
+          <a href="cv/AmrAhmedHamam.pdf" target="_blank" rel="noopener" class="shimmer inline-flex items-center gap-2 bg-[var(--accent)] text-[var(--accent-ink)] font-bold px-7 py-3.5 rounded-full hover:opacity-90 transition-colors text-sm">
+            Download CV
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" aria-hidden="true"><path stroke="currentColor" stroke-width="2" d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>
+          </a>
+          <a href="https://github.com/amr180" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 border border-[var(--border-strong)] text-[var(--text-2)] font-semibold px-7 py-3.5 rounded-full hover:bg-[var(--accent-soft)] hover:border-[var(--accent)] transition-colors text-sm">View GitHub</a>
+          <a href="mailto:amrr00360@gmail.com" class="inline-flex items-center gap-2 border border-[var(--accent-2-border)] text-[var(--accent-2)] font-semibold px-7 py-3.5 rounded-full hover:bg-[var(--accent-2-soft)] transition-colors text-sm">Contact Me</a>
+        </div>
+        <div class="reveal d4 mt-10">
+          <p class="text-xs font-semibold text-[var(--muted)] uppercase tracking-widest mb-3">Core Technologies</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="tag">C#</span><span class="tag alt">ASP.NET Core</span><span class="tag">EF Core</span><span class="tag alt">SQL Server</span>
+            <span class="tag">Angular</span><span class="tag alt">Clean Architecture</span><span class="tag">MediatR</span><span class="tag alt">JWT</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal d2 flex justify-center lg:justify-end">
+        <div class="relative w-72 h-72 md:w-80 md:h-80 lg:w-[380px] lg:h-[380px]">
+          <div class="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-[var(--accent)] via-[var(--grad-mid)] to-transparent opacity-30 blur-2xl"></div>
+          <div class="relative w-full h-full rounded-[2rem] border border-[var(--border-strong)] shadow-2xl shadow-black/50 bg-[var(--card)] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_30%_30%,var(--accent),transparent_35%),radial-gradient(circle_at_70%_70%,var(--accent-2),transparent_35%)]"></div>
+            <div class="relative text-center">
+              <div class="mx-auto w-36 h-36 md:w-44 md:h-44 rounded-full border-2 border-[var(--accent)] bg-[var(--bg)] flex items-center justify-center shadow-xl shadow-[var(--accent-border)]">
+                <span class="text-5xl md:text-6xl font-extrabold grad-text">
+                  <image class="mx-auto w-36 h-36 md:w-44 md:h-44 rounded-full border-2 border-[var(--accent)] bg-[var(--bg)] flex items-center justify-center shadow-xl shadow-[var(--accent-border)]" src="./images/Amr_Ahmed.png" alt="Amr Ahmed Profile"></image>
+                </span>
+              </div>
+              <p class="mt-6 text-xl font-bold text-[var(--text)]">Amr Ahmed Hamam</p>
+              <p class="mt-1 text-sm text-[var(--muted)]">Full Stack .NET Developer</p>
+            </div>
+          </div>
+          <div class="absolute -bottom-5 -left-5 bg-[var(--card)] backdrop-blur border border-[var(--accent-border)] text-[var(--accent)] font-bold text-sm px-5 py-3 rounded-2xl shadow-xl">.NET · Angular</div>
+          <div class="absolute -top-4 -right-3 bg-[var(--accent-2-soft)] border border-[var(--accent-2-border)] text-[var(--accent-2)] font-semibold text-xs px-4 py-2 rounded-full backdrop-blur">Quad Insight Trainee</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS ═══ -->
+<section id="stats" class="py-20 border-y border-[var(--border)] bg-[var(--bg-soft)]">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8" id="stats-grid">
+      <div class="reveal text-center"><p class="stat-num font-display font-extrabold text-5xl text-[var(--text)]"><span class="count-num" data-count="2026" data-suffix="">0</span></p><p class="text-sm text-[var(--muted)] mt-2">CS Graduation Year</p></div>
+      <div class="reveal d1 text-center"><p class="stat-num font-display font-extrabold text-5xl text-[var(--text)]"><span class="count-num" data-count="5" data-suffix="+">0+</span></p><p class="text-sm text-[var(--muted)] mt-2">Featured Projects</p></div>
+      <div class="reveal d2 text-center"><p class="stat-num font-display font-extrabold text-5xl text-[var(--text)]"><span class="count-num" data-count="2" data-suffix="">0</span></p><p class="text-sm text-[var(--muted)] mt-2">Integrated APIs</p></div>
+      <div class="reveal d3 text-center"><p class="stat-num font-display font-extrabold text-5xl text-[var(--text)]"><span class="count-num" data-count="1" data-suffix="">0</span></p><p class="text-sm text-[var(--muted)] mt-2">Full Stack Track · .NET + Angular</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+      <div class="reveal order-2 lg:order-1">
+        <div class="relative mx-auto max-w-sm">
+          <div class="absolute inset-0 rounded-[2rem] bg-gradient-to-tr from-[var(--accent-2)] to-[var(--accent)] opacity-20 blur-2xl"></div>
+          <div class="relative w-full aspect-[4/5] rounded-[2rem] border border-[var(--border-strong)] bg-[var(--card)] flex items-center justify-center overflow-hidden">
+            <div class="text-center px-8">
+              <div class="w-32 h-32 mx-auto rounded-3xl bg-gradient-to-br from-[var(--accent)] to-[var(--accent-2)] text-[var(--accent-ink)] flex items-center justify-center text-4xl font-extrabold shadow-2xl">
+                <span class="text-5xl md:text-6xl font-extrabold grad-text">
+                  <image class="w-32 h-32 mx-auto rounded-3xl bg-gradient-to-br from-[var(--accent)] to-[var(--accent-2)] text-[var(--accent-ink)] flex items-center justify-center text-4xl font-extrabold shadow-2xl" src="./images/Amr_Ahmed.png" alt="Amr Ahmed Profile"></image>
+                </span>
+              </div>
+              <p class="mt-7 text-2xl font-bold text-[var(--text)]">Computer Science</p>
+              <p class="mt-2 text-[var(--muted)]">Faculty of Science · Tanta University</p>
+              <div class="mt-6 flex flex-wrap justify-center gap-2"><span class="tag">.NET</span><span class="tag alt">Angular</span><span class="tag">Testing</span></div>
+            </div>
+          </div>
+          <div class="absolute -bottom-5 right-5 bg-[var(--card)] border border-[var(--border)] px-5 py-3 rounded-2xl shadow-xl"><p class="text-[10px] text-[var(--muted)]">Alexandria · Egypt</p></div>
+        </div>
+      </div>
+      <div class="order-1 lg:order-2">
+        <p class="reveal text-xs font-semibold text-[var(--accent)] tracking-widest uppercase mb-3">About Me</p>
+        <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-[var(--text)] leading-tight mb-6">Building reliable<br>full-stack solutions</h2>
+        <p class="reveal d2 text-[var(--text-2)] leading-relaxed mb-4">I'm Amr Ahmed Hamam, a Computer Science graduate and Entry-Level Full Stack .NET Developer. My current focus is building maintainable backend systems with ASP.NET Core and connecting them to practical Angular frontends.</p>
+        <p class="reveal d3 text-[var(--text-2)] leading-relaxed mb-8">My training at Quad Insight gave me hands-on experience with Clean Architecture, MediatR, Dependency Injection, JWT authentication, API integration, and multi-project development. My earlier software testing experience also shaped the way I approach debugging, requirements, API validation, and product quality.</p>
+        <div class="reveal d4 grid sm:grid-cols-2 gap-3">
+          <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4"><p class="text-[10px] font-bold uppercase tracking-widest text-[var(--muted)] mb-1">Current Focus</p><p class="text-sm text-[var(--text)] font-medium">ASP.NET Core · Clean Architecture · Angular</p></div>
+          <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4"><p class="text-[10px] font-bold uppercase tracking-widest text-[var(--muted)] mb-1">Strength</p><p class="text-sm text-[var(--text)] font-medium">Development + Testing mindset</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills" class="py-24 bg-[var(--bg-soft)] border-y border-[var(--border)]">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="max-w-2xl mb-12"><p class="reveal text-xs font-semibold text-[var(--accent)] tracking-widest uppercase mb-3">Tech Stack</p><h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-[var(--text)]">Tools I build with</h2></div>
+    <div class="grid lg:grid-cols-3 gap-6">
+      <article class="reveal card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6"><h3 class="font-bold text-lg text-[var(--text)] mb-4">Backend</h3><div class="flex flex-wrap gap-2"><span class="tag">C#</span><span class="tag alt">ASP.NET Core Web API</span><span class="tag">EF Core</span><span class="tag alt">LINQ</span><span class="tag">MediatR</span><span class="tag alt">Dependency Injection</span><span class="tag">JWT</span><span class="tag alt">ASP.NET Core Identity</span><span class="tag">RESTful APIs</span></div></article>
+      <article class="reveal d1 card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6"><h3 class="font-bold text-lg text-[var(--text)] mb-4">Frontend & Data</h3><div class="flex flex-wrap gap-2"><span class="tag">Angular</span><span class="tag alt">TypeScript</span><span class="tag">JavaScript</span><span class="tag alt">HTML5</span><span class="tag">CSS3</span><span class="tag alt">SQL Server</span><span class="tag">Swagger</span><span class="tag alt">Postman</span></div></article>
+      <article class="reveal d2 card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6"><h3 class="font-bold text-lg text-[var(--text)] mb-4">Architecture & Quality</h3><div class="flex flex-wrap gap-2"><span class="tag">Clean Architecture</span><span class="tag alt">API Integration</span><span class="tag">Git</span><span class="tag alt">GitHub</span><span class="tag">Manual Testing</span><span class="tag alt">API Testing</span><span class="tag">Selenium WebDriver</span><span class="tag alt">TestNG</span></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROJECTS ═══ -->
+<section id="work" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="max-w-3xl mb-12"><p class="reveal text-xs font-semibold text-[var(--accent)] tracking-widest uppercase mb-3">Projects</p><h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-[var(--text)]">Hands-on work</h2><p class="reveal d2 text-[var(--muted)] mt-4 leading-relaxed">Projects that reflect my current development track, architecture practice, integration work, and software testing background.</p></div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <article class="reveal card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-7"><div class="flex items-center justify-between gap-3 mb-4"><span class="tag">Quad Insight · Training</span><span class="text-xs text-[var(--muted)]">Full Stack</span></div><h3 class="font-bold text-2xl text-[var(--text)] mb-3">Task Management System</h3><p class="text-sm text-[var(--muted)] leading-relaxed mb-5">Built a full-stack task management system with ASP.NET Core Web API and Angular. Applied Clean Architecture, MediatR and Dependency Injection, and secured the application with JWT authentication and authorization.</p><div class="flex flex-wrap gap-2"><span class="tag">ASP.NET Core</span><span class="tag alt">Angular</span><span class="tag">MediatR</span><span class="tag alt">Clean Architecture</span><span class="tag">JWT</span><span class="tag alt">SQL Server</span></div></article>
+
+      <article class="reveal d1 card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-7"><div class="flex items-center justify-between gap-3 mb-4"><span class="tag alt">Quad Insight · Training</span><span class="text-xs text-[var(--muted)]">Integration</span></div><h3 class="font-bold text-2xl text-[var(--text)] mb-3">Product & Order Management</h3><p class="text-sm text-[var(--muted)] leading-relaxed mb-5">Developed Product Management and Order Management APIs using Clean Architecture and Dependency Injection, then integrated the two systems so Order Management could communicate with Product Management.</p><div class="flex flex-wrap gap-2"><span class="tag">ASP.NET Core</span><span class="tag alt">Clean Architecture</span><span class="tag">Dependency Injection</span><span class="tag alt">EF Core</span><span class="tag">API Integration</span></div></article>
+
+      <article class="reveal d2 card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-7"><div class="flex items-center justify-between gap-3 mb-4"><span class="tag">Graduation Project</span><span class="text-xs text-[var(--muted)]">Team Lead</span></div><h3 class="font-bold text-2xl text-[var(--text)] mb-3">BayTack</h3><p class="text-sm text-[var(--muted)] leading-relaxed mb-5">Full-stack home finishing and services marketplace. Contributed to RESTful APIs, Identity and JWT authentication/authorization, SQL Server integration with EF Core, Clean Architecture, debugging, requirements analysis, and team collaboration.</p><div class="flex flex-wrap gap-2"><span class="tag">ASP.NET Core</span><span class="tag alt">Identity</span><span class="tag">JWT</span><span class="tag alt">EF Core</span><span class="tag">SQL Server</span><span class="tag alt">Clean Architecture</span></div></article>
+
+      <article class="reveal d3 card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-7"><div class="flex items-center justify-between gap-3 mb-4"><span class="tag alt">Software Support</span><span class="text-xs text-[var(--muted)]">Maintenance</span></div><h3 class="font-bold text-2xl text-[var(--text)] mb-3">College Devices Management System</h3><p class="text-sm text-[var(--muted)] leading-relaxed mb-5">Maintained and troubleshot an existing device management system, resolving navigation, frontend-backend communication, and server connectivity issues.</p><div class="flex flex-wrap gap-2"><span class="tag">Troubleshooting</span><span class="tag alt">Frontend</span><span class="tag">Backend Communication</span></div></article>
+
+      <article class="reveal card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-7 md:col-span-2"><div class="flex items-center justify-between gap-3 mb-4"><span class="tag">Software Testing</span><span class="text-xs text-[var(--muted)]">Web & Mobile</span></div><h3 class="font-bold text-2xl text-[var(--text)] mb-3">Administrative & Financial Transactions System</h3><p class="text-sm text-[var(--muted)] leading-relaxed mb-5">Worked on requirements analysis, manual test cases, API testing with Postman and Swagger, defect reporting, retesting, regression testing, and UI validation across web and mobile applications.</p><div class="flex flex-wrap gap-2"><span class="tag">Manual Testing</span><span class="tag alt">API Testing</span><span class="tag">Postman</span><span class="tag alt">Swagger</span><span class="tag">Regression Testing</span></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TRAINING ═══ -->
+<section id="training" class="py-24 bg-[var(--bg-soft)] border-y border-[var(--border)]">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="max-w-2xl mb-12"><p class="reveal text-xs font-semibold text-[var(--accent)] tracking-widest uppercase mb-3">Training</p><h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-[var(--text)]">Learning through practice</h2></div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <article class="reveal card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-7"><span class="tag">Current</span><h3 class="font-bold text-xl text-[var(--text)] mt-4 mb-2">Quad Insight · Full Stack .NET Trainee</h3><p class="text-sm text-[var(--muted)] leading-relaxed">Hands-on training focused on professional development workflows, Clean Architecture, MediatR, Dependency Injection, JWT, Angular, API integration, and building maintainable .NET systems.</p></article>
+      <article class="reveal d1 card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-7"><span class="tag alt">2025 – 2026</span><h3 class="font-bold text-xl text-[var(--text)] mt-4 mb-2">DEPI · Full Stack .NET</h3><p class="text-sm text-[var(--muted)] leading-relaxed">Full Stack .NET training covering backend development, databases, frontend fundamentals, project work, and team-based software development.</p></article>
+      <article class="reveal d2 card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-7"><span class="tag">2024 – 2025</span><h3 class="font-bold text-xl text-[var(--text)] mt-4 mb-2">DEPI · Software Testing</h3><p class="text-sm text-[var(--muted)] leading-relaxed">Training in manual testing, API testing, automation concepts, test case design, defect reporting, and quality assurance workflows.</p></article>
+      <article class="reveal d3 card-h bg-[var(--card)] border border-[var(--border)] rounded-2xl p-7"><span class="tag alt">2025</span><h3 class="font-bold text-xl text-[var(--text)] mt-4 mb-2">Sprints Egypt · Introduction to Software Testing</h3><p class="text-sm text-[var(--muted)] leading-relaxed">Focused testing training supporting the transition into practical QA and software development work.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXPERIENCE ═══ -->
+<section id="experience" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="max-w-2xl mb-12"><p class="reveal text-xs font-semibold text-[var(--accent)] tracking-widest uppercase mb-3">Experience</p><h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-[var(--text)]">From testing to development</h2></div>
+    <div class="tl max-w-4xl">
+      <article class="tl-item reveal mb-10"><span class="tl-dot"></span><p class="text-xs uppercase tracking-widest font-semibold text-[var(--accent)]">Jul 2026 – Present</p><h3 class="font-bold text-2xl text-[var(--text)] mt-2">Full Stack .NET Trainee · Quad Insight</h3><p class="text-sm text-[var(--muted)] leading-relaxed mt-3 max-w-3xl">Working through hands-on backend and full-stack projects, applying Clean Architecture, MediatR, Dependency Injection, JWT authentication, Angular integration, API design, and multi-service integration.</p></article>
+      <article class="tl-item emerald reveal d1 mb-10"><span class="tl-dot"></span><p class="text-xs uppercase tracking-widest font-semibold text-[var(--accent-2)]">2025 – 2026</p><h3 class="font-bold text-2xl text-[var(--text)] mt-2">Full Stack .NET Trainee · DEPI</h3><p class="text-sm text-[var(--muted)] leading-relaxed mt-3 max-w-3xl">Developed backend and full-stack skills through practical projects and team-based delivery, with a focus on ASP.NET Core and modern .NET development.</p></article>
+      <article class="tl-item reveal d2"><span class="tl-dot"></span><p class="text-xs uppercase tracking-widest font-semibold text-[var(--accent)]">2024 – 2025</p><h3 class="font-bold text-2xl text-[var(--text)] mt-2">Software Testing Track · DEPI & Sprints Egypt</h3><p class="text-sm text-[var(--muted)] leading-relaxed mt-3 max-w-3xl">Built practical experience in requirements analysis, manual testing, API testing, regression testing, defect reporting, and automation foundations. This testing background now supports my development work with a strong quality mindset.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="py-24 bg-[var(--bg-soft)] border-y border-[var(--border)]">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+      <div>
+        <p class="reveal text-xs font-semibold text-[var(--accent)] tracking-widest uppercase mb-3">Contact</p>
+        <h2 class="reveal d1 font-display font-bold text-4xl md:text-5xl text-[var(--text)] leading-tight mb-6">Let's build something<br>useful together.</h2>
+        <p class="reveal d2 text-[var(--muted)] leading-relaxed mb-8">I'm open to Junior / Entry-Level Full Stack .NET opportunities, internships, and collaborative software projects where I can keep learning and contribute with a strong development and testing mindset.</p>
+        <div class="reveal d3 flex flex-wrap gap-3"><a href="https://github.com/amr180" target="_blank" rel="noopener" class="tag">GitHub · amr180</a><a href="mailto:amrr00360@gmail.com" class="tag alt">Email Me</a></div>
+      </div>
+      <div class="reveal d2 bg-[var(--card)] border border-[var(--border)] rounded-3xl p-7 md:p-8">
+        <div class="space-y-5">
+          <a href="mailto:amrr00360@gmail.com" class="group flex items-center gap-4 text-[var(--muted)] hover:text-[var(--text)] transition-colors"><span class="w-11 h-11 flex items-center justify-center bg-[var(--bg)] rounded-xl border border-[var(--border)] group-hover:border-[var(--accent-border)] group-hover:bg-[var(--accent-soft)]"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></span><span><small class="block text-xs text-[var(--muted)]">Email</small><strong class="text-sm">amrr00360@gmail.com</strong></span></a>
+          <a href="tel:01116692492" class="group flex items-center gap-4 text-[var(--muted)] hover:text-[var(--text)] transition-colors"><span class="w-11 h-11 flex items-center justify-center bg-[var(--bg)] rounded-xl border border-[var(--border)] group-hover:border-[var(--accent-border)] group-hover:bg-[var(--accent-soft)]"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></span><span><small class="block text-xs text-[var(--muted)]">Phone</small><strong class="text-sm" dir="ltr">01116692492</strong></span></a>
+          <a href="https://github.com/amr180" target="_blank" rel="noopener" class="group flex items-center gap-4 text-[var(--muted)] hover:text-[var(--text)] transition-colors"><span class="w-11 h-11 flex items-center justify-center bg-[var(--bg)] rounded-xl border border-[var(--border)] group-hover:border-[var(--accent-border)] group-hover:bg-[var(--accent-soft)]"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.53-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.67 1.25 3.32.96.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.77.11 3.06.73.81 1.18 1.84 1.18 3.1 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.04.77 2.1v3.11c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg></span><span><small class="block text-xs text-[var(--muted)]">GitHub</small><strong class="text-sm">github.com/amr180</strong></span></a>
+          <div class="flex items-center gap-4 text-[var(--muted)]"><span class="w-11 h-11 flex items-center justify-center bg-[var(--bg)] rounded-xl border border-[var(--border)]"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a10 10 0 100 20 10 10 0 000-20Zm0 0c2.5 2.76 3.75 6.09 3.75 10S14.5 19.24 12 22m0-20C9.5 4.76 8.25 8.09 8.25 12S9.5 19.24 12 22M2 12h20"/></svg></span><span><small class="block text-xs text-[var(--muted)]">Location</small><strong class="text-sm">Alexandria, Egypt</strong></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="no-print" style="background:var(--card-2);border-top:1px solid var(--border);margin-top:auto">
+  <div style="height:3px;background:linear-gradient(90deg,var(--accent),var(--grad-mid) 45%,var(--accent-2))"></div>
+  <div class="max-w-6xl mx-auto px-6 py-10">
+    <div class="flex flex-col md:flex-row justify-between items-center text-center gap-4">
+      <div><p class="font-bold text-[var(--text)]">Amr Ahmed Hamam</p><p class="text-sm text-[var(--muted)] mt-1">Entry-Level Full Stack .NET Developer</p></div>
+      <div class="flex gap-3"><a href="https://github.com/amr180" target="_blank" rel="noopener" class="social-btn" title="GitHub" aria-label="GitHub"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.53-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.67 1.25 3.32.96.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.77.11 3.06.73.81 1.18 1.84 1.18 3.1 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.04.77 2.1v3.11c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg></a><a href="mailto:amrr00360@gmail.com" class="social-btn" title="Email" aria-label="Email"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></a></div>
+    </div>
+    <hr class="my-6" style="border-color:var(--border-strong);opacity:.5">
+    <div class="text-center text-sm text-[var(--muted)]">All rights reserved © <span id="yr"></span> · Built for Amr Ahmed Hamam</div>
+  </div>
+</footer>
+
+<button id="toTop" class="fixed bottom-6 right-6 z-40 w-11 h-11 items-center justify-center rounded-full bg-[var(--accent)] text-[var(--accent-ink)] shadow-lg shadow-[var(--accent-border)] hover:opacity-90 transition-all hidden" aria-label="Back to top" :class="sc?'!flex':''">
+  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" aria-hidden="true"><path stroke="currentColor" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+</button>
+
+<script>
+function runCount(el) {
+  const nums = el.querySelectorAll('.count-num');
+  if (!nums.length) return;
+  const start = (n) => {
+    const target = parseInt(n.getAttribute('data-count'), 10) || 0;
+    const suffix = n.getAttribute('data-suffix') || '';
+    const dur = 1400;
+    const t0 = performance.now();
+    const step = (t) => {
+      const p = Math.min((t - t0) / dur, 1);
+      const v = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      n.textContent = v.toLocaleString() + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  if (!('IntersectionObserver' in window)) { nums.forEach(n => n.textContent = (parseInt(n.getAttribute('data-count'),10)||0).toLocaleString() + (n.getAttribute('data-suffix')||'')); return; }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      io.unobserve(en.target);
+      nums.forEach(start);
+    });
+  }, { threshold: 0.4 });
+  io.observe(el);
+}
+
+function app() {
+  return {
+    mm: false,
+    palOpen: false,
+    sc: false,
+    s: 'hero',
+    theme: 'dark',
+    palette: 'cyber',
+
+    init() {
+      // theme & palette from storage
+      const savedTheme = localStorage.getItem('folio-theme');
+      const savedPalette = localStorage.getItem('folio-palette');
+      this.theme = (savedTheme === 'light' || savedTheme === 'dark') ? savedTheme : 'dark';
+      this.palette = ['cyber','royal','aurum','ocean','flame'].includes(savedPalette) ? savedPalette : 'cyber';
+      document.documentElement.dataset.theme = this.theme;
+      document.documentElement.dataset.palette = this.palette;
+
+      window.addEventListener('scroll', () => {
+        this.sc = window.scrollY > 40;
+        const btn = document.getElementById('toTop');
+        if (btn) btn.classList.toggle('hidden', window.scrollY < 300);
+        this.updateSection();
+      }, { passive: true });
+
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+      const sg = document.getElementById('stats-grid');
+      if (sg) runCount(sg);
+
+      const yr = document.getElementById('yr');
+      if (yr) yr.textContent = new Date().getFullYear();
+
+      const top = document.getElementById('toTop');
+      if (top) top.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+      const form = document.getElementById('folio-form');
+      if (form) {
+        const successMsg = document.getElementById('folio-success');
+        const submitBtn = form.querySelector('button');
+        form.addEventListener('submit', (ev) => {
+          ev.preventDefault();
+          if (!form.checkValidity()) { form.reportValidity(); return; }
+          const data = new FormData(form);
+          const payload = {
+            name: (data.get('name') || '').trim(),
+            email: (data.get('email') || '').trim(),
+            subject: (data.get('subject') || '').trim(),
+            message: (data.get('message') || '').trim()
+          };
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sending…';
+          fetch('/mail', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          })
+            .then((r) => r.json())
+            .then((res) => {
+              if (res.ok) {
+                successMsg.classList.remove('hidden');
+                setTimeout(() => successMsg.classList.add('hidden'), 8000);
+                form.reset();
+              } else {
+                alert(res.error || 'Something went wrong · please try again.');
+              }
+            })
+            .catch(() => {
+              alert('Could not reach the recording server · double-click start-site.bat (or run `npm start`) and open http://localhost:3000.');
+            })
+            .finally(() => {
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Send message →';
+            });
+        });
+      }
+    },
+
+    setTheme(t) {
+      this.theme = t;
+      document.documentElement.dataset.theme = t;
+      localStorage.setItem('folio-theme', t);
+    },
+
+    setPalette(p) {
+      this.palette = p;
+      document.documentElement.dataset.palette = p;
+      localStorage.setItem('folio-palette', p);
+    },
+
+    updateSection() {
+      const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 60;
+      if (atBottom) { this.s = 'contact'; return; }
+      const ids = ['contact','insights','reviews','experience','training','certifications','work','skills','about','stats','hero'];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 130) { this.s = id; return; }
+      }
+    }
+  }
+}
+</script>
+
+
+</body>
+</html>
